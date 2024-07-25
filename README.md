@@ -1,18 +1,15 @@
-Claro! Vamos criar um README detalhado para a API `fatura-cartao-credito`, explicando o processo envolvido. Vou incluir informações sobre o propósito da API, a estrutura geral do projeto, como configurar e executar a API, e detalhes sobre os principais componentes e fluxos.
 
----
-
-# fatura-cartao-credito API
+# Fatura Cartao Credito BATCH
 
 ## Visão Geral
 
-A API `fatura-cartao-credito` é um serviço para processar faturas de cartões de crédito. Ela utiliza Spring Batch para gerenciar o processamento em lotes de transações e geração de faturas, incluindo a leitura de dados, processamento, e escrita de resultados em arquivos.
+A API `fatura-cartao-credito` é um serviço para processar faturas de cartões de crédito. Ela utiliza Spring Batch para gerenciar o processamento em lotes de transações e geração de faturas, incluindo a leitura de dados, processamento e escrita de resultados em arquivos.
 
 ## Estrutura do Projeto
 
 O projeto está estruturado da seguinte maneira:
 
-- **dominio**: Contém as classes de domínio para `FaturaCartaoCredito`, `Transacao`, `CartaoCredito`, e `Cliente`.
+- **dominio**: Contém as classes de domínio para `FaturaCartaoCredito`, `Transacao`, `CartaoCredito` e `Cliente`.
 - **reader**: Contém leitores personalizados para ler e processar dados.
 - **processor**: Contém processadores que transformam os dados.
 - **writer**: Contém escritores que escrevem os dados processados em arquivos.
@@ -49,23 +46,23 @@ Configura o Job do Spring Batch chamado `faturaCartaoCreditoJob`. Este job utili
 
 ### Pré-requisitos
 
-- Java 17 ou superior
+- Java 8 ou superior
 - Maven
-- Banco de Dados (configurado em `application.properties`)
+- Banco de Dados (configurado em `application.yaml`)
 - Dependências do Spring Boot e Spring Batch
 
 ### Configuração do Banco de Dados
 
-Certifique-se de que o banco de dados está configurado e acessível conforme especificado em `application.properties`.
+Certifique-se de que o banco de dados está configurado e acessível conforme especificado em `application.yaml`.
 
 ### Executando a API
 
-1. **Compilar o Projeto**: 
+1. **Compilar o Projeto**:
    ```bash
    mvn clean install
    ```
 
-2. **Executar a Aplicação**: 
+2. **Executar a Aplicação**:
    ```bash
    mvn spring-boot:run
    ```
@@ -75,7 +72,7 @@ Certifique-se de que o banco de dados está configurado e acessível conforme es
 ### Configuração do Job e Steps
 
 - **`FaturaCartaoCreditoStepConfig`**: Define o step que processa faturas. Utiliza `FaturaCartaoCreditoReader`, `CarregarDadosClienteProcessor`, e `ArquivoFaturaCartaoCreditoWriterConfig`.
-  
+
 - **`FaturaCartaoCreditoJobConfig`**: Configura o job principal, que inicia o step definido.
 
 ### Processamento de Transações
@@ -85,3 +82,28 @@ O processo de leitura e agrupamento de transações é gerenciado pelo `FaturaCa
 ### Escrita dos Dados
 
 Os dados são escritos em arquivos configurados na `ArquivoFaturaCartaoCreditoWriterConfig`. A classe `TotalTransacoesFooterCallback` adiciona um rodapé com o total das transações.
+
+## Exemplo de Saída do Arquivo
+
+Após o processamento, o arquivo gerado tem o seguinte formato:
+
+```
+                                                                                                            Cartão XPTO
+                                                                                                            Rua Verg, 021
+
+
+Nome: Riley Dare
+Endereço: 877 Toney Valleys
+
+
+Fatura completa do cartão: 1500573
+-----------------------------------------------------------------------------------------------------
+DATA          DESCRIÇÃO                                        VALOR
+-----------------------------------------------------------------------------------------------------
+[26/12/1970] Aspernatur in odit est et quis.                                                  $4,000.00
+[26/12/1970] Aspernatur in odit est et quis.                                                  $2,000.00
+
+                                                                                                     Total: $6,000.00
+```
+
+---
