@@ -3,6 +3,7 @@ package com.dowglasmaia.batch.faturacartaocredito.step;
 import com.dowglasmaia.batch.faturacartaocredito.dominio.FaturaCartaoCredito;
 import com.dowglasmaia.batch.faturacartaocredito.dominio.Transacao;
 import com.dowglasmaia.batch.faturacartaocredito.reader.FaturaCartaoCreditoReader;
+import com.dowglasmaia.batch.faturacartaocredito.watch.StepTimeLoggerListener;
 import com.dowglasmaia.batch.faturacartaocredito.writer.TotalTransacoesFooterCallback;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -43,6 +44,7 @@ public class FaturaCartaoCreditoStepConfig {
               .processor(cartaoCreditoItemProcessor)  // Define o processador customizado para processar as faturas de cartão de crédito
               .writer(cartaoCreditoItemWriter) // Define o escritor customizado para escrever as faturas de cartão de crédito
               .listener(listener)  // Define o listener customizado para calcular o total das transações
+              .listener(new StepTimeLoggerListener())
               .build();
     }
 

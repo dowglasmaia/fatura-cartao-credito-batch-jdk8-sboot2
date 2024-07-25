@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class CarregarDadosClienteProcessor implements ItemProcessor<FaturaCartao
 
     @Override
     public FaturaCartaoCredito process(FaturaCartaoCredito faturaCartaoCredito) throws Exception {
+
         int clienteId = faturaCartaoCredito.getCliente().getId();
         String uri = String.format("https://my-json-server.typicode.com/giuliana-bezerra/demo/profile/%s", clienteId);
 

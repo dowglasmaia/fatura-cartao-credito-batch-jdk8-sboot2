@@ -17,7 +17,9 @@ app:
     password: maiapw
     driver-class-name: org.postgresql.Driver
 
-logging:
-  level:
-    org.springframework.batch.item.database: DEBUG
+#logging:
+#  file:
+#    name: logs/fatura-cartao-credito.log
+#  pattern:
+#    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 
